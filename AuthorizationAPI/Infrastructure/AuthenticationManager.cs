@@ -1,8 +1,8 @@
 ﻿using AuthorizationAPI.Core.Entities.Contracts;
-using AuthorizationAPI.Core.Entities.DataTransferObjects;
+using AuthorizationAPI.Core.Entities.Models;
+using AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Identity;
-using System.Net;
 
 namespace AuthorizationAPI.Infrastructure
 {
@@ -30,6 +30,11 @@ namespace AuthorizationAPI.Infrastructure
                 return user;
             }
             return null;
+        }
+
+        public async Task SignOut()
+        {
+            await _signInManager.SignOutAsync();
         }
 
         public async Task<(string accessToken, string refreshToken)> GetTokens(UserForAuthenticationDto user)

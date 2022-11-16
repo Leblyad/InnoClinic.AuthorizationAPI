@@ -1,7 +1,5 @@
-﻿using AuthorizationAPI.Application.Services.Abstractions;
-using AuthorizationAPI.Core.Entities.DataTransferObjects;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using AuthorizationAPI.Application.Serrvices.Abstractions;
+using AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthorizationAPI.Presentation.Controllers
@@ -52,6 +50,13 @@ namespace AuthorizationAPI.Presentation.Controllers
         {
             var userInfo = await _authenticationService.AuthenticateUser(user);
             return Ok(userInfo);
+        }
+
+        [HttpPost("signout")]
+        public async Task<IActionResult> SignOut()
+        {
+            await _authenticationService.SignOutUser();
+            return Ok();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using AuthorizationAPI.Core.Entities.DataTransferObjects;
+﻿using AuthorizationAPI.Core.Entities.Models;
+using AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
 
 namespace AuthorizationAPI.Core.Entities.Contracts
 {
@@ -6,5 +7,6 @@ namespace AuthorizationAPI.Core.Entities.Contracts
     {
         Task<User> ReturnUserIfValid(UserForAuthenticationDto userForAuthentication);
         Task<(string accessToken, string refreshToken)> GetTokens(UserForAuthenticationDto userForAuthentication);
+        Task SignOut();
     }
 }

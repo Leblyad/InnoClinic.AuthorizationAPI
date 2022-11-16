@@ -1,14 +1,13 @@
-﻿using AuthorizationAPI.Application.Services.Abstractions;
+﻿using AuthorizationAPI.Application.Serrvices.Abstractions;
+using AuthorizationAPI.Application.Services;
 using AuthorizationAPI.Core.Entities.Contracts;
+using AuthorizationAPI.Core.Entities.Models;
 using AuthorizationAPI.Infrastructure;
 using AuthorizationAPI.Infrastructure.Configuration;
 using AuthorizationAPI.Infrastructure.Repository;
-using AuthorizationAPI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace AuthorizationAPI
 {
