@@ -159,12 +159,12 @@ namespace AuthorizationAPI.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "02bf6b39-a050-4a31-aa76-e577063d3790", "eafdd90c-2544-4a16-8b29-776dbc932887", "Manager", "MANAGER" });
+                values: new object[] { "34b20ce2-8ae8-47ce-842e-ae864d03e5f1", "27e38306-ce95-4f7f-ab47-eef491639a27", "Administrator", "ADMINISTRATOR" });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3e44352d-a864-40bd-a536-c8d6bad780a4", "258fb280-d39a-4e5b-8b32-6aa7dc264c01", "Administrator", "ADMINISTRATOR" });
+                values: new object[] { "5ff5bff3-c738-4584-8472-3c7dcfcacabe", "25ed0436-171b-4d9f-907a-f73906c06237", "Manager", "MANAGER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",

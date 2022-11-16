@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthorizationAPI.Migrations
 {
     [DbContext(typeof(AuthenticationDbContext))]
-    [Migration("20221115121652_CreateDatabase")]
+    [Migration("20221116124441_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace AuthorizationAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AuthorizationAPI.User", b =>
+            modelBuilder.Entity("AuthorizationAPI.Core.Entities.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -126,15 +126,15 @@ namespace AuthorizationAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "02bf6b39-a050-4a31-aa76-e577063d3790",
-                            ConcurrencyStamp = "eafdd90c-2544-4a16-8b29-776dbc932887",
+                            Id = "5ff5bff3-c738-4584-8472-3c7dcfcacabe",
+                            ConcurrencyStamp = "25ed0436-171b-4d9f-907a-f73906c06237",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "3e44352d-a864-40bd-a536-c8d6bad780a4",
-                            ConcurrencyStamp = "258fb280-d39a-4e5b-8b32-6aa7dc264c01",
+                            Id = "34b20ce2-8ae8-47ce-842e-ae864d03e5f1",
+                            ConcurrencyStamp = "27e38306-ce95-4f7f-ab47-eef491639a27",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -257,7 +257,7 @@ namespace AuthorizationAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("AuthorizationAPI.User", null)
+                    b.HasOne("AuthorizationAPI.Core.Entities.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -266,7 +266,7 @@ namespace AuthorizationAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("AuthorizationAPI.User", null)
+                    b.HasOne("AuthorizationAPI.Core.Entities.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -281,7 +281,7 @@ namespace AuthorizationAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AuthorizationAPI.User", null)
+                    b.HasOne("AuthorizationAPI.Core.Entities.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -290,7 +290,7 @@ namespace AuthorizationAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("AuthorizationAPI.User", null)
+                    b.HasOne("AuthorizationAPI.Core.Entities.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
