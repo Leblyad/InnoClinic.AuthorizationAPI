@@ -3,6 +3,7 @@ using AuthorizationAPI.Core.Entities.Contracts;
 using AuthorizationAPI.Core.Entities.Models;
 using AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthorizationAPI.Application.Services
@@ -32,6 +33,8 @@ namespace AuthorizationAPI.Application.Services
             if (!await _roleManager.RoleExistsAsync(role))
                 throw new Exception("Role not exists");
 
+            //var identityRole = await _roleManager.FindByNameAsync(role);
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("roles", role));
             await _userManager.AddToRoleAsync(user, role);
         }
 

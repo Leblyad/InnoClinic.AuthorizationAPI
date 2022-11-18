@@ -18,13 +18,18 @@ namespace AuthorizationAPI.Infrastructure.Configuration
             (
                 new IdentityRole
                 {
-                    Name = nameof(UserRole.Manager),
-                    NormalizedName = nameof(UserRole.Manager).ToUpper()
+                    Name = nameof(UserRole.Receptionist),
+                    NormalizedName = nameof(UserRole.Receptionist).ToUpper()
                 },
                 new IdentityRole
                 {
-                    Name = nameof(UserRole.Administrator),
-                    NormalizedName = nameof(UserRole.Administrator).ToUpper()
+                    Name = nameof(UserRole.Doctor),
+                    NormalizedName = nameof(UserRole.Doctor).ToUpper()
+                },
+                new IdentityRole
+                {
+                    Name = nameof(UserRole.Pacient),
+                    NormalizedName = nameof(UserRole.Pacient).ToUpper()
                 }
             );
         }

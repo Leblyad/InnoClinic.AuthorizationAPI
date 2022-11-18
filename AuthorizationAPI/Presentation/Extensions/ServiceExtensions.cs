@@ -5,9 +5,17 @@ using AuthorizationAPI.Core.Entities.Models;
 using AuthorizationAPI.Infrastructure;
 using AuthorizationAPI.Infrastructure.Configuration;
 using AuthorizationAPI.Infrastructure.Repository;
+using AuthorizationAPI.Presentation.Configuration;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace AuthorizationAPI
 {
@@ -51,6 +59,7 @@ namespace AuthorizationAPI
 
             }).AddEntityFrameworkStores<AuthenticationDbContext>()
             .AddDefaultTokenProviders();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddIdentityServer()
                 .AddAspNetIdentity<User>()
@@ -58,6 +67,7 @@ namespace AuthorizationAPI
                 .AddInMemoryClients(IdentityConfiguration.BuildClients(configuration))
                 .AddInMemoryIdentityResources(IdentityConfiguration.BuildIdentityResources())
                 .AddInMemoryApiScopes(IdentityConfiguration.BuildApiScopes())
+                .AddProfileService<ProfileService>()
                 .AddDeveloperSigningCredential();
 
             services.ConfigureApplicationCookie(config =>
