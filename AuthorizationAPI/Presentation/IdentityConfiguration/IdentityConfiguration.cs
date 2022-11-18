@@ -23,6 +23,7 @@ namespace AuthorizationAPI.Infrastructure.Configuration
                     {
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                         ScopeAPI,
+                        ScopeRoles
                     },
 
                     AllowOfflineAccess = true,
@@ -38,11 +39,12 @@ namespace AuthorizationAPI.Infrastructure.Configuration
                 {
                     Scopes =
                     {
-                        ScopeAPI,
-                        ScopeRoles,
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                         IdentityServerConstants.StandardScopes.Profile,
+                        ScopeAPI,
+                        ScopeRoles,
+
                     },
 
                 }
@@ -55,7 +57,7 @@ namespace AuthorizationAPI.Infrastructure.Configuration
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource {Name = ScopeRoles, UserClaims={JwtClaimTypes.Role} },
+                new IdentityResource {Name = ScopeRoles, UserClaims={JwtClaimTypes.Role} }
             };
         }
 

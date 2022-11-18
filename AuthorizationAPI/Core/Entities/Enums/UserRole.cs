@@ -2,7 +2,8 @@
 {
     public enum UserRole
     {
-        Administrator,
-        Manager
+        Receptionist,
+        Doctor,
+        Pacient
     }
 }
