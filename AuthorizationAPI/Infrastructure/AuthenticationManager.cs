@@ -47,7 +47,7 @@ namespace AuthorizationAPI.Infrastructure
                 Scope = "offline_access",
                 UserName = user.UserName,
                 Password = user.Password
-                
+
             };
             var tokenResponse = await client.RequestPasswordTokenAsync(tokenRequest);
 
