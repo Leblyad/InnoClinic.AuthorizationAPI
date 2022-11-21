@@ -4,9 +4,7 @@ using AuthorizationAPI.Core.Entities.Enums;
 using AuthorizationAPI.Core.Entities.Models;
 using AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Data;
 
 namespace AuthorizationAPI.Application.Services
 {
@@ -64,7 +62,7 @@ namespace AuthorizationAPI.Application.Services
             await _authManager.SignOut();
         }
 
-        public async Task CreateUser(UserForCreationDto userForCreation, string role = "Pacient")
+        public async Task CreateUser(UserForCreationDto userForCreation, string role)
         {
             var user = _mapper.Map<User>(userForCreation);
 
