@@ -1,10 +1,12 @@
 ﻿using AuthorizationAPI.Application.Serrvices.Abstractions;
 using AuthorizationAPI.Core.Entities.Contracts;
+using AuthorizationAPI.Core.Entities.Enums;
 using AuthorizationAPI.Core.Entities.Models;
 using AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Data;
 
 namespace AuthorizationAPI.Application.Services
 {
@@ -67,6 +69,7 @@ namespace AuthorizationAPI.Application.Services
             var user = _mapper.Map<User>(userForCreation);
 
             var result = await _userManager.CreateAsync(user, userForCreation.Password);
+            await _userManager.AddToRoleAsync(user, nameof(UserRole.Pacient));
 
             if (!result.Succeeded)
             {
