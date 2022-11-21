@@ -25,7 +25,7 @@ namespace AuthorizationAPI.Presentation.Configuration
 
             var claims = new List<Claim>
             {
-                new Claim("roles", userRoles.FirstOrDefault())
+                new Claim("roles", userRoles.LastOrDefault())
             };
 
             context.IssuedClaims.AddRange(claims);

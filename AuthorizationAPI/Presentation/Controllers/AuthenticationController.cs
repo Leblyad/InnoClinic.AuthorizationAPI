@@ -20,9 +20,9 @@ namespace AuthorizationAPI.Presentation.Controllers
         /// </summary>
         /// <param name="userForCreation"></param>
         [HttpPost]
-        public async Task<IActionResult> RegisterUser([FromBody] UserForCreationDto userForCreation)
+        public async Task<IActionResult> RegisterUser([FromBody] UserForCreationDto userForCreation, [FromQuery] string role)
         {
-            await _authenticationService.CreateUser(userForCreation);
+            await _authenticationService.CreateUser(userForCreation, role);
             return Ok();
         }
 

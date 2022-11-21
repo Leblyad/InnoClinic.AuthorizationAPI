@@ -35,8 +35,8 @@ namespace AuthorizationAPI.Application.Services
             if (!await _roleManager.RoleExistsAsync(role))
                 throw new Exception("Role not exists");
 
-            //var identityRole = await _roleManager.FindByNameAsync(role);
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("roles", role));
+            var previousRole = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
+            await _userManager.RemoveFromRoleAsync(user, previousRole);
             await _userManager.AddToRoleAsync(user, role);
         }
 
@@ -64,12 +64,26 @@ namespace AuthorizationAPI.Application.Services
             await _authManager.SignOut();
         }
 
-        public async Task CreateUser(UserForCreationDto userForCreation)
+        public async Task CreateUser(UserForCreationDto userForCreation, string role = "Pacient")
         {
             var user = _mapper.Map<User>(userForCreation);
 
             var result = await _userManager.CreateAsync(user, userForCreation.Password);
-            await _userManager.AddToRoleAsync(user, nameof(UserRole.Pacient));
+
+            switch (role)
+            {
+                case nameof(UserRole.Receptionist):
+                    await _userManager.AddToRoleAsync(user, nameof(UserRole.Receptionist));
+                    break;
+                case nameof(UserRole.Pacient):
+                    await _userManager.AddToRoleAsync(user, nameof(UserRole.Pacient));
+                    break;
+                case nameof(UserRole.Doctor):
+                    await _userManager.AddToRoleAsync(user, nameof(UserRole.Doctor));
+                    break;
+                default:
+                    throw new Exception("Role not exists");
+            }
 
             if (!result.Succeeded)
             {
