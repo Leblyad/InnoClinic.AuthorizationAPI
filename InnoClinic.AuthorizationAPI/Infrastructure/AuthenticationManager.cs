@@ -11,12 +11,13 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public AuthenticationManager(UserManager<User> userManager, SignInManager<User> signInManager, IHttpClientFactory httpClientFactory)
+        private readonly IConfiguration _configuration;
+        public AuthenticationManager(UserManager<User> userManager, SignInManager<User> signInManager, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
             _signInManager = signInManager;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         public async Task<User> ReturnUserIfValid(UserForAuthenticationDto userForAuth)
@@ -40,9 +41,10 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure
         public async Task<(string accessToken, string refreshToken)> GetTokens(UserForAuthenticationDto user)
         {
             var client = _httpClientFactory.CreateClient();
+            var tokenRoute = _configuration.GetValue<string>("Routes:TokenRoute");
             PasswordTokenRequest tokenRequest = new PasswordTokenRequest()
             {
-                Address = "https://localhost:7141/connect/token",
+                Address = tokenRoute,
                 ClientId = "APIClient",
                 Scope = "offline_access openid",
                 UserName = user.UserName,

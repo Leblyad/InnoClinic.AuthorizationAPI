@@ -6,6 +6,6 @@
 
         public string RefreshToken { get; set; }
 
-        public IList<string> UserRoles { get; set; }
+        public string UserRole { get; set; }
     }
 }

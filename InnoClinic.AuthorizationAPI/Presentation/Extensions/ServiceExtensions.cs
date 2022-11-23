@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using InnoClinic.AuthorizationAPI.Presentation.Middlewares;
+using Microsoft.AspNetCore.Hosting;
 
 namespace InnoClinic.AuthorizationAPI
 {
@@ -42,6 +43,8 @@ namespace InnoClinic.AuthorizationAPI
                         new List<string>()
                     }
                 });
+
+                setup.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comments.xml"));
             });
 
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
