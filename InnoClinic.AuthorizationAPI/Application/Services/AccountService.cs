@@ -29,7 +29,7 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
 
         public async Task ChangeUserRoleAsync(string email, string role)
         {
-            var user = await _userManager.FindByNameAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
                 throw new UserNotFoundException(email);
