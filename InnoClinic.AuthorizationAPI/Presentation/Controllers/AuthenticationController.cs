@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -20,33 +20,28 @@ namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
         /// Creates a new user
         /// </summary>
         /// <param name="userForCreation"></param>
-        /// 
-        [Authorize]
-        [HttpGet("q")]
-        public async Task<IActionResult> RegisterUser()
-        {
-            //var user = await _authenticationService.CreateUser(userForCreation, role);
-            return Ok("ХУЕТА");
-        }
-
+        /// <response code="200">Returns user info (username, email, role).</response>
+        /// <response code="404">Role not found.</response>
+        /// <response code="500">Operation wasn't succeeded.</response>
         [HttpPost]
         public async Task<IActionResult> RegisterUser([FromBody] UserForCreationDto userForCreation)
         {
-            var user = await _authenticationService.CreateUser(userForCreation, "Patient");
+            var user = await _authenticationService.CreateUserAsync(userForCreation);
             return Created(nameof(RegisterUser), user);
         }
 
         /// <summary>
         /// Add role to user
-        /// | Required role: Administrator
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="userName"></param>
         /// <param name="role"></param>
+        /// <response code="200">User role changed.</response>
+        /// <response code="404">Role or user not found.</response>
         [HttpPost]
-        [Route("add_role")]
-        public async Task<IActionResult> AddRoleToUser([FromQuery] string login, [FromQuery] string role)
+        [Route("role")]
+        public async Task<IActionResult> ChangeUserRole([FromQuery] string userName, [FromQuery] string role)
         {
-            await _authenticationService.AddRoleToUser(login, role);
+            await _authenticationService.ChangeUserRoleAsync(userName, role);
             return Ok();
         }
 
@@ -54,18 +49,23 @@ namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
         /// Authenticate user by username and password
         /// </summary>
         /// <param name="user"></param>
-        /// <returns>Returns access token for authenticated user</returns>
+        /// <response code="200">Returns user info (access token, refresh token, role).</response>
+        /// <response code="401">Unauthorized.</response>
         [HttpPost("login")]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
         {
-            var userInfo = await _authenticationService.AuthenticateUser(user);
+            var userInfo = await _authenticationService.AuthenticateUserAsync(user);
             return Ok(userInfo);
         }
 
+        /// <summary>
+        /// Signout user
+        /// </summary>
+        /// <response code="200">User signout.</response>
         [HttpPost("signout")]
         public async Task<IActionResult> SignOut()
         {
-            await _authenticationService.SignOutUser();
+            await _authenticationService.SignOutUserAsync();
             return Ok();
         }
     }

@@ -27,12 +27,12 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
             _mapper = mapper;
         }
 
-        public async Task AddRoleToUser(string login, string role)
+        public async Task ChangeUserRoleAsync(string userName, string role)
         {
-            var user = await _userManager.FindByNameAsync(login);
+            var user = await _userManager.FindByNameAsync(userName);
 
             if (user == null)
-                throw new UserNotFoundException(login);
+                throw new UserNotFoundException(userName);
 
             if (!await _roleManager.RoleExistsAsync(role))
                 throw new RoleNotFoundException(role);
@@ -42,7 +42,7 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
             await _userManager.AddToRoleAsync(user, role);
         }
 
-        public async Task<AuthenticatedUserInfo> AuthenticateUser(UserForAuthenticationDto user)
+        public async Task<AuthenticatedUserInfo> AuthenticateUserAsync(UserForAuthenticationDto user)
         {
             var validUser = await _authManager.ReturnUserIfValid(user);
 
@@ -52,30 +52,31 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
             }
 
             var tokens = await _authManager.GetTokens(user);
+            var role = _userManager.GetRolesAsync(validUser).Result.FirstOrDefault().ToString();
 
             return new AuthenticatedUserInfo
             {
                 AccessToken = tokens.accessToken,
                 RefreshToken = tokens.refreshToken,
-                UserRoles = await _userManager.GetRolesAsync(validUser)
+                UserRole = role
             };
         }
 
-        public async Task SignOutUser()
+        public async Task SignOutUserAsync()
         {
             await _authManager.SignOut();
         }
 
-        public async Task<CreatedUserDto> CreateUser(UserForCreationDto userForCreation, string role)
+        public async Task<CreatedUserDto> CreateUserAsync(UserForCreationDto userForCreation)
         {
-            var user = _mapper.Map<User>(userForCreation);
+            if (!Enum.IsDefined(typeof(UserRole), userForCreation.Role))
+                throw new RoleNotFoundException(userForCreation.Role);
 
-            if (!Enum.IsDefined(typeof(UserRole), role))
-                throw new RoleNotFoundException(role);
+            var user = _mapper.Map<User>(userForCreation);
 
             var result = await _userManager.CreateAsync(user, userForCreation.Password);
 
-            var userRole = (UserRole)Enum.Parse(typeof(UserRole), role);
+            var userRole = (UserRole)Enum.Parse(typeof(UserRole), userForCreation.Role);
 
             await _userManager.AddToRoleAsync(user, userRole.ToString());
 
@@ -89,7 +90,10 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
                 throw new Exception(errors);
             }
 
-            return _mapper.Map<CreatedUserDto>(user);
+            var userDto = _mapper.Map<CreatedUserDto>(user);
+            userDto.Role = userRole.ToString();
+
+            return userDto;
         }
     }
 }

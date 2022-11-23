@@ -5,9 +5,9 @@ namespace InnoClinic.AuthorizationAPI.Application.Services.Abstractions
 {
     public interface IAccountService
     {
-        public Task<AuthenticatedUserInfo> AuthenticateUser(UserForAuthenticationDto user);
-        public Task<CreatedUserDto> CreateUser(UserForCreationDto userForCreation, string role);
-        public Task AddRoleToUser(string login, string role);
-        public Task SignOutUser();
+        public Task<AuthenticatedUserInfo> AuthenticateUserAsync(UserForAuthenticationDto user);
+        public Task<CreatedUserDto> CreateUserAsync(UserForCreationDto userForCreation);
+        public Task ChangeUserRoleAsync(string userName, string role);
+        public Task SignOutUserAsync();
     }
 }
