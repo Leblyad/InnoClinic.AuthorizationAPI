@@ -33,15 +33,15 @@ namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
         /// <summary>
         /// Add role to user
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="email"></param>
         /// <param name="role"></param>
         /// <response code="200">User role changed.</response>
         /// <response code="404">Role or user not found.</response>
         [HttpPost]
         [Route("role")]
-        public async Task<IActionResult> ChangeUserRole([FromQuery] string userName, [FromQuery] string role)
+        public async Task<IActionResult> ChangeUserRole([FromQuery] string email, [FromQuery] string role)
         {
-            await _authenticationService.ChangeUserRoleAsync(userName, role);
+            await _authenticationService.ChangeUserRoleAsync(email, role);
             return Ok();
         }
 

@@ -27,12 +27,12 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
             _mapper = mapper;
         }
 
-        public async Task ChangeUserRoleAsync(string userName, string role)
+        public async Task ChangeUserRoleAsync(string email, string role)
         {
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByNameAsync(email);
 
             if (user == null)
-                throw new UserNotFoundException(userName);
+                throw new UserNotFoundException(email);
 
             if (!await _roleManager.RoleExistsAsync(role))
                 throw new RoleNotFoundException(role);
@@ -51,7 +51,7 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
                 throw new UnauthorizedException();
             }
 
-            var tokens = await _authManager.GetTokens(user);
+            var tokens = await _authManager.GetTokens(user, validUser.UserName);
             var role = _userManager.GetRolesAsync(validUser).Result.FirstOrDefault().ToString();
 
             return new AuthenticatedUserInfo
