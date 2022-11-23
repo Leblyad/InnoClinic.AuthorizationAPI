@@ -18,6 +18,7 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure.Configuration
             (
                 new IdentityRole
                 {
+                    Id = "0fc5b095-096f-4a3a-be41-fad238b2a81a",
                     Name = nameof(UserRole.Receptionist),
                     NormalizedName = nameof(UserRole.Receptionist).ToUpper()
                 },

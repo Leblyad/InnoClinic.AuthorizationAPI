@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InnoClinic.AuthorizationAPI.Migrations
 {
-    public partial class Addinitialdata : Migration
+    public partial class Initialuserdata : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -161,20 +161,20 @@ namespace InnoClinic.AuthorizationAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "307432df-738b-4d9c-a848-87b8febd60e6", "1c55d437-dd89-4e31-a188-b45bff1d53eb", "Patient", "PATIENT" },
-                    { "4625afa2-5d27-4081-bd8d-659360eb639b", "e8809069-c8be-40de-8071-342f0e5071d1", "Doctor", "DOCTOR" },
-                    { "4e6a508d-9317-4358-b9bf-00b54486cc9f", "ec402a11-d028-40a3-b922-cd857c990a81", "Receptionist", "RECEPTIONIST" }
+                    { "0fc5b095-096f-4a3a-be41-fad238b2a81a", "28687c30-4676-4b8c-a445-a5ce87dc8fb1", "Receptionist", "RECEPTIONIST" },
+                    { "4243b0af-6412-4681-9f89-6f381c6c2431", "638e42b3-87bd-44da-8a3b-c467514a2068", "Patient", "PATIENT" },
+                    { "aa1dc2a3-2b80-4b8e-84d0-5477d2acdfa6", "3111b518-16b5-4c7f-ae03-23db5cf04bec", "Doctor", "DOCTOR" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "0baa7b48-769a-4e6e-8d92-02fdbbf5c052", 0, "7dc4e888-dce9-46e8-b93f-e9dc2c86cf5b", "SomeMail@mail.com", false, "FirstName", "LastName", false, null, null, null, "AOlyJyjUAuCpG9fQfktDGXb3uy0Urk/0ZoHSS3G4IWHfy2FAprZPRR6btQAApTItnw==", "+123451234567", false, "f00598dc-5652-40b7-919e-420f93e5de8e", false, "UserName" });
+                values: new object[] { "31b9b272-53d0-4f6f-a190-0d5c70e242b4", 0, "85c520cc-845c-453e-ab5e-0be8692332e0", "UserName@UserName.com", false, "UserName", "UserName", false, null, "USERNAME@USERNAME.COM", "USERNAME", "AQAAAAEAACcQAAAAEP+J8W1hQjkWRXQK83qLaH+kYHl9UXm9J5A+CiY1gRSjTdnS98IfiVadg8YuV68pAw==", "XXXXXXXXXXXXX", false, "00000000-0000-0000-0000-000000000000", false, "UserName" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "4e6a508d-9317-4358-b9bf-00b54486cc9f", "0baa7b48-769a-4e6e-8d92-02fdbbf5c052" });
+                values: new object[] { "0fc5b095-096f-4a3a-be41-fad238b2a81a", "31b9b272-53d0-4f6f-a190-0d5c70e242b4" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
