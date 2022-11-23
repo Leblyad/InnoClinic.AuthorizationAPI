@@ -95,18 +95,20 @@ namespace InnoClinic.AuthorizationAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0baa7b48-769a-4e6e-8d92-02fdbbf5c052",
+                            Id = "31b9b272-53d0-4f6f-a190-0d5c70e242b4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7dc4e888-dce9-46e8-b93f-e9dc2c86cf5b",
-                            Email = "SomeMail@mail.com",
+                            ConcurrencyStamp = "85c520cc-845c-453e-ab5e-0be8692332e0",
+                            Email = "UserName@UserName.com",
                             EmailConfirmed = false,
-                            FirstName = "FirstName",
-                            LastName = "LastName",
+                            FirstName = "UserName",
+                            LastName = "UserName",
                             LockoutEnabled = false,
-                            PasswordHash = "AOlyJyjUAuCpG9fQfktDGXb3uy0Urk/0ZoHSS3G4IWHfy2FAprZPRR6btQAApTItnw==",
-                            PhoneNumber = "+123451234567",
+                            NormalizedEmail = "USERNAME@USERNAME.COM",
+                            NormalizedUserName = "USERNAME",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP+J8W1hQjkWRXQK83qLaH+kYHl9UXm9J5A+CiY1gRSjTdnS98IfiVadg8YuV68pAw==",
+                            PhoneNumber = "XXXXXXXXXXXXX",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f00598dc-5652-40b7-919e-420f93e5de8e",
+                            SecurityStamp = "00000000-0000-0000-0000-000000000000",
                             TwoFactorEnabled = false,
                             UserName = "UserName"
                         });
@@ -141,22 +143,22 @@ namespace InnoClinic.AuthorizationAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4e6a508d-9317-4358-b9bf-00b54486cc9f",
-                            ConcurrencyStamp = "ec402a11-d028-40a3-b922-cd857c990a81",
+                            Id = "0fc5b095-096f-4a3a-be41-fad238b2a81a",
+                            ConcurrencyStamp = "28687c30-4676-4b8c-a445-a5ce87dc8fb1",
                             Name = "Receptionist",
                             NormalizedName = "RECEPTIONIST"
                         },
                         new
                         {
-                            Id = "4625afa2-5d27-4081-bd8d-659360eb639b",
-                            ConcurrencyStamp = "e8809069-c8be-40de-8071-342f0e5071d1",
+                            Id = "aa1dc2a3-2b80-4b8e-84d0-5477d2acdfa6",
+                            ConcurrencyStamp = "3111b518-16b5-4c7f-ae03-23db5cf04bec",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "307432df-738b-4d9c-a848-87b8febd60e6",
-                            ConcurrencyStamp = "1c55d437-dd89-4e31-a188-b45bff1d53eb",
+                            Id = "4243b0af-6412-4681-9f89-6f381c6c2431",
+                            ConcurrencyStamp = "638e42b3-87bd-44da-8a3b-c467514a2068",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -251,8 +253,8 @@ namespace InnoClinic.AuthorizationAPI.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "0baa7b48-769a-4e6e-8d92-02fdbbf5c052",
-                            RoleId = "4e6a508d-9317-4358-b9bf-00b54486cc9f"
+                            UserId = "31b9b272-53d0-4f6f-a190-0d5c70e242b4",
+                            RoleId = "0fc5b095-096f-4a3a-be41-fad238b2a81a"
                         });
                 });
 

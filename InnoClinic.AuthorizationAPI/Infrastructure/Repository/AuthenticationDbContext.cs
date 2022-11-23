@@ -1,5 +1,6 @@
 ﻿using InnoClinic.AuthorizationAPI.Core.Entities.Models;
 using InnoClinic.AuthorizationAPI.Infrastructure.Configuration;
+using InnoClinic.AuthorizationAPI.Presentation.IdentityConfiguration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,8 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure.Repository
         private void ConfigureTables(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
 
             modelBuilder.Entity<User>(entity => entity.ToTable(name: "Users"));
             modelBuilder.Entity<IdentityRole>(entity => entity.ToTable(name: "Roles"));
