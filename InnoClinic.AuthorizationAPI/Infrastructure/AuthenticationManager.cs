@@ -22,9 +22,9 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure
 
         public async Task<User> ReturnUserIfValid(UserForAuthenticationDto userForAuth)
         {
-            var user = await _userManager.FindByNameAsync(userForAuth.UserName);
+            var user = await _userManager.FindByEmailAsync(userForAuth.Email);
 
-            var res = await _signInManager.PasswordSignInAsync(userForAuth.UserName, userForAuth.Password, false, false);
+            var res = await _signInManager.PasswordSignInAsync(user.UserName, userForAuth.Password, false, false);
 
             if (res.Succeeded)
             {
@@ -38,16 +38,17 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<(string accessToken, string refreshToken)> GetTokens(UserForAuthenticationDto user)
+        public async Task<(string accessToken, string refreshToken)> GetTokens(UserForAuthenticationDto user, string userName)
         {
             var client = _httpClientFactory.CreateClient();
             var tokenRoute = _configuration.GetValue<string>("Routes:TokenRoute");
+
             PasswordTokenRequest tokenRequest = new PasswordTokenRequest()
             {
                 Address = tokenRoute,
                 ClientId = "APIClient",
                 Scope = "offline_access openid",
-                UserName = user.UserName,
+                UserName = userName,
                 Password = user.Password
 
             };

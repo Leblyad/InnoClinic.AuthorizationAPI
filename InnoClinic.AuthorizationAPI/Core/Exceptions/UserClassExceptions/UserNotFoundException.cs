@@ -2,7 +2,7 @@
 {
     public class UserNotFoundException : NotFoundException
     {
-        public UserNotFoundException(string login) : base($"The user with the login {login} was not found.")
+        public UserNotFoundException(string email) : base($"The user with the login {email} was not found.")
         {
         }
     }
