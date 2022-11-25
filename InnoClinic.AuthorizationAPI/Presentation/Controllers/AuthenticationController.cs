@@ -1,4 +1,5 @@
 ﻿using InnoClinic.AuthorizationAPI.Application.Services.Abstractions;
+using InnoClinic.AuthorizationAPI.Application.Services.AuthorizationDTO;
 using InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,14 +40,14 @@ namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
         /// <response code="404">Role or user not found.</response>
         [HttpPost]
         [Route("role")]
-        public async Task<IActionResult> ChangeUserRole([FromQuery] string email, [FromQuery] string role)
+        public async Task<IActionResult> ChangeUserRole([FromBody] UserForChangingRole userForChangingRole)
         {
-            await _authenticationService.ChangeUserRoleAsync(email, role);
+            await _authenticationService.ChangeUserRoleAsync(userForChangingRole);
             return Ok();
         }
 
         /// <summary>
-        /// Authenticate user by username and password
+        /// Authenticate user by email and password
         /// </summary>
         /// <param name="user"></param>
         /// <response code="200">Returns user info (access token, refresh token, role).</response>

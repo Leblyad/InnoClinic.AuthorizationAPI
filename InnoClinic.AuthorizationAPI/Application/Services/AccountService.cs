@@ -9,6 +9,7 @@ using System;
 using InnoClinic.AuthorizationAPI.Core.Exceptions;
 using InnoClinic.AuthorizationAPI.Core.Exceptions.UserClassExceptions;
 using InnoClinic.AuthorizationAPI.Core.Entities.AuthorizationDTO;
+using InnoClinic.AuthorizationAPI.Application.Services.AuthorizationDTO;
 
 namespace InnoClinic.AuthorizationAPI.Application.Services
 {
@@ -27,19 +28,19 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
             _mapper = mapper;
         }
 
-        public async Task ChangeUserRoleAsync(string email, string role)
+        public async Task ChangeUserRoleAsync(UserForChangingRole userForChangingRole)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(userForChangingRole.Email);
 
             if (user == null)
-                throw new UserNotFoundException(email);
+                throw new UserNotFoundException(userForChangingRole.Role);
 
-            if (!await _roleManager.RoleExistsAsync(role))
-                throw new RoleNotFoundException(role);
+            if (!await _roleManager.RoleExistsAsync(userForChangingRole.Role))
+                throw new RoleNotFoundException(userForChangingRole.Role);
 
             var previousRole = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
             await _userManager.RemoveFromRoleAsync(user, previousRole);
-            await _userManager.AddToRoleAsync(user, role);
+            await _userManager.AddToRoleAsync(user, userForChangingRole.Role);
         }
 
         public async Task<AuthenticatedUserInfo> AuthenticateUserAsync(UserForAuthenticationDto user)
