@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <BaseOutputPath></BaseOutputPath>
-    <DocumentationFile>D:\Clinic\InnoClinic.AuthorizationAPI\InnoClinic.AuthorizationAPI\bin\Debug\net6.0\Comments.xml</DocumentationFile>
+    <DocumentationFile>\bin\Debug\net6.0\Comments.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
