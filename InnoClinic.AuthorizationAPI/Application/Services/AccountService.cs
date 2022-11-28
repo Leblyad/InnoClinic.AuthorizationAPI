@@ -10,9 +10,6 @@ using InnoClinic.AuthorizationAPI.Core.Exceptions;
 using InnoClinic.AuthorizationAPI.Core.Exceptions.UserClassExceptions;
 using InnoClinic.AuthorizationAPI.Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System.Data;
 
 namespace InnoClinic.AuthorizationAPI.Application.Services
 {
