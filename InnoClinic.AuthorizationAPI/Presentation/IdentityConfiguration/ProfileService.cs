@@ -1,6 +1,6 @@
-﻿using InnoClinic.AuthorizationAPI.Core.Entities.Models;
-using IdentityServer4.Models;
+﻿using IdentityServer4.Models;
 using IdentityServer4.Services;
+using InnoClinic.AuthorizationAPI.Core.Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
@@ -9,12 +9,10 @@ namespace InnoClinic.AuthorizationAPI.Presentation.Configuration
     public class ProfileService : IProfileService
     {
         protected UserManager<User> _userManager;
-        protected RoleManager<IdentityRole> _roleManager;
 
-        public ProfileService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public ProfileService(UserManager<User> userManager)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
         }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)

@@ -1,15 +1,18 @@
-﻿using InnoClinic.AuthorizationAPI.Application.Services.Abstractions;
+﻿using AutoMapper;
+using InnoClinic.AuthorizationAPI.Application.Services.Abstractions;
+using InnoClinic.AuthorizationAPI.Application.Services.AuthorizationDTO;
+using InnoClinic.AuthorizationAPI.Core.Entities.AuthorizationDTO;
 using InnoClinic.AuthorizationAPI.Core.Entities.Contracts;
 using InnoClinic.AuthorizationAPI.Core.Entities.Enums;
 using InnoClinic.AuthorizationAPI.Core.Entities.Models;
 using InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using System;
 using InnoClinic.AuthorizationAPI.Core.Exceptions;
 using InnoClinic.AuthorizationAPI.Core.Exceptions.UserClassExceptions;
-using InnoClinic.AuthorizationAPI.Core.Entities.AuthorizationDTO;
-using InnoClinic.AuthorizationAPI.Application.Services.AuthorizationDTO;
+using InnoClinic.AuthorizationAPI.Infrastructure.Repository;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace InnoClinic.AuthorizationAPI.Application.Services
 {
@@ -19,13 +22,15 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IAuthenticationManager _authManager;
         private readonly IMapper _mapper;
+        private readonly AuthenticationDbContext _dbContext;
 
-        public AccountService(UserManager<User> userManager, IMapper mapper, RoleManager<IdentityRole> roleManager, IAuthenticationManager authManager)
+        public AccountService(UserManager<User> userManager, IMapper mapper, RoleManager<IdentityRole> roleManager, IAuthenticationManager authManager, AuthenticationDbContext dbContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _authManager = authManager;
             _mapper = mapper;
+            _dbContext = dbContext;
         }
 
         public async Task ChangeUserRoleAsync(UserForChangingRole userForChangingRole)
@@ -75,21 +80,74 @@ namespace InnoClinic.AuthorizationAPI.Application.Services
 
             var user = _mapper.Map<User>(userForCreation);
 
-            var result = await _userManager.CreateAsync(user, userForCreation.Password);
+            var isUserCreated = await _userManager.CreateAsync(user, userForCreation.Password);
 
-            var userRole = (UserRole)Enum.Parse(typeof(UserRole), userForCreation.Role);
-
-            await _userManager.AddToRoleAsync(user, userRole.ToString());
-
-            if (!result.Succeeded)
+            if (!isUserCreated.Succeeded)
             {
                 var errors = "";
-                foreach (var error in result.Errors)
+                foreach (var error in isUserCreated.Errors)
                 {
                     errors += $"{error.Code}: {error.Description}\n";
                 }
                 throw new Exception(errors);
             }
+
+            var userRole = (UserRole)Enum.Parse(typeof(UserRole), userForCreation.Role);
+
+            var isRoleAdded = await _userManager.AddToRoleAsync(user, userRole.ToString());
+
+            if (!isRoleAdded.Succeeded)
+            {
+                var errors = "";
+                foreach (var error in isRoleAdded.Errors)
+                {
+                    errors += $"{error.Code}: {error.Description}\n";
+                }
+                throw new Exception(errors);
+            }
+
+            var userDto = _mapper.Map<CreatedUserDto>(user);
+            userDto.Role = userRole.ToString();
+
+            return userDto;
+        }
+
+        public async Task<CreatedUserDto> CreateUserTransactionAsync(UserForCreationDto userForCreation)
+        {
+            var transaction = _dbContext.Database.BeginTransaction();
+
+            if (!Enum.IsDefined(typeof(UserRole), userForCreation.Role))
+                throw new RoleNotFoundException(userForCreation.Role);
+
+            var user = _mapper.Map<User>(userForCreation);
+
+            var isUserCreated = await _userManager.CreateAsync(user, userForCreation.Password);
+
+            if (!isUserCreated.Succeeded)
+            {
+                var errors = "";
+                foreach (var error in isUserCreated.Errors)
+                {
+                    errors += $"{error.Code}: {error.Description}\n";
+                }
+                throw new Exception(errors);
+            }
+
+            var userRole = (UserRole)Enum.Parse(typeof(UserRole), userForCreation.Role);
+
+            var isRoleAdded = await _userManager.AddToRoleAsync(user, userRole.ToString());
+
+            if (!isRoleAdded.Succeeded)
+            {
+                var errors = "";
+                foreach (var error in isRoleAdded.Errors)
+                {
+                    errors += $"{error.Code}: {error.Description}\n";
+                }
+                throw new Exception(errors);
+            }
+
+            transaction.Commit();
 
             var userDto = _mapper.Map<CreatedUserDto>(user);
             userDto.Role = userRole.ToString();

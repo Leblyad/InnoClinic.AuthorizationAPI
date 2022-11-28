@@ -7,7 +7,6 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure.Configuration
     public class IdentityConfiguration
     {
         public static string ScopeAPI => "APIClient";
-        public static string ScopeRoles => "roles";
 
         public static IEnumerable<Client> BuildClients()
         {
@@ -22,9 +21,7 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure.Configuration
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
-                        ScopeAPI,
-                        ScopeRoles
+                        IdentityServerConstants.StandardScopes.OfflineAccess
                     },
 
                     AllowOfflineAccess = true
@@ -43,8 +40,7 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure.Configuration
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                         IdentityServerConstants.StandardScopes.Profile,
-                        ScopeAPI,
-                        ScopeRoles
+                        ScopeAPI
                     },
 
                 }
@@ -56,8 +52,7 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure.Configuration
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                new IdentityResource {Name = ScopeRoles, UserClaims={JwtClaimTypes.Role}}
+                new IdentityResources.Profile()
             };
         }
 

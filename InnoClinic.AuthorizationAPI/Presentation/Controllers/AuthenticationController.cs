@@ -1,7 +1,6 @@
 ﻿using InnoClinic.AuthorizationAPI.Application.Services.Abstractions;
 using InnoClinic.AuthorizationAPI.Application.Services.AuthorizationDTO;
 using InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
@@ -15,6 +14,20 @@ namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
         public AuthenticationController(IAccountService authenticationService)
         {
             _authenticationService = authenticationService;
+        }
+
+        /// <summary>
+        /// Creates a new user but using ef transaction
+        /// </summary>
+        /// <param name="userForCreation"></param>
+        /// <response code="200">Returns user info (username, email, role).</response>
+        /// <response code="404">Role not found.</response>
+        /// <response code="500">Operation wasn't succeeded.</response>
+        [HttpPost]
+        public async Task<IActionResult> RegisterUserTransaction([FromBody] UserForCreationDto userForCreation)
+        {
+            var user = await _authenticationService.CreateUserTransactionAsync(userForCreation);
+            return Created(nameof(RegisterUser), user);
         }
 
         /// <summary>

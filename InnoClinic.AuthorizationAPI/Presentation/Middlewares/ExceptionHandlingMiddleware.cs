@@ -4,7 +4,7 @@ using InnoClinic.AuthorizationAPI.Core.Exceptions;
 namespace InnoClinic.AuthorizationAPI.Presentation.Middlewares
 {
     public class ExceptionHandlingMiddleware
-    { 
+    {
         private readonly RequestDelegate _next;
         public ExceptionHandlingMiddleware(RequestDelegate next)
         {
