@@ -24,6 +24,7 @@ namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
         /// <response code="404">Role not found.</response>
         /// <response code="500">Operation wasn't succeeded.</response>
         [HttpPost]
+        [Route("transaction")]
         public async Task<IActionResult> RegisterUserTransaction([FromBody] UserForCreationDto userForCreation)
         {
             var user = await _authenticationService.CreateUserTransactionAsync(userForCreation);
