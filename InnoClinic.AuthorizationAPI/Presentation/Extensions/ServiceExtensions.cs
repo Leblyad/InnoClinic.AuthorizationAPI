@@ -1,17 +1,16 @@
-﻿using InnoClinic.AuthorizationAPI.Application.Services.Abstractions;
-using InnoClinic.AuthorizationAPI.Application.Services;
+﻿using InnoClinic.AuthorizationAPI.Application.Services;
+using InnoClinic.AuthorizationAPI.Application.Services.Abstractions;
 using InnoClinic.AuthorizationAPI.Core.Entities.Contracts;
 using InnoClinic.AuthorizationAPI.Core.Entities.Models;
 using InnoClinic.AuthorizationAPI.Infrastructure;
 using InnoClinic.AuthorizationAPI.Infrastructure.Configuration;
 using InnoClinic.AuthorizationAPI.Infrastructure.Repository;
 using InnoClinic.AuthorizationAPI.Presentation.Configuration;
+using InnoClinic.AuthorizationAPI.Presentation.Middlewares;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
-using InnoClinic.AuthorizationAPI.Presentation.Middlewares;
-using Microsoft.AspNetCore.Hosting;
 
 namespace InnoClinic.AuthorizationAPI
 {
@@ -91,6 +90,11 @@ namespace InnoClinic.AuthorizationAPI
             services.AddDbContext<AuthenticationDbContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b =>
                         b.MigrationsAssembly("InnoClinic.AuthorizationAPI")));
+        }
+
+        public static void AddDbContext(this IServiceCollection services)
+        {
+            services.AddScoped<AuthenticationDbContext>();
         }
     }
 }

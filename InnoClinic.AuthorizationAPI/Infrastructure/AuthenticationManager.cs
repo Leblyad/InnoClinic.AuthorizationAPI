@@ -1,7 +1,7 @@
-﻿using InnoClinic.AuthorizationAPI.Core.Entities.Contracts;
+﻿using IdentityModel.Client;
+using InnoClinic.AuthorizationAPI.Core.Entities.Contracts;
 using InnoClinic.AuthorizationAPI.Core.Entities.Models;
 using InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
-using IdentityModel.Client;
 using Microsoft.AspNetCore.Identity;
 
 namespace InnoClinic.AuthorizationAPI.Infrastructure
@@ -50,7 +50,6 @@ namespace InnoClinic.AuthorizationAPI.Infrastructure
                 Scope = "offline_access openid",
                 UserName = userName,
                 Password = user.Password
-
             };
             var tokenResponse = await client.RequestPasswordTokenAsync(tokenRequest);
 

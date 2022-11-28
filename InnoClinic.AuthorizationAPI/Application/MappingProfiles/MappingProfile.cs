@@ -1,7 +1,7 @@
-﻿using InnoClinic.AuthorizationAPI.Core.Entities.Models;
-using InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
-using AutoMapper;
+﻿using AutoMapper;
 using InnoClinic.AuthorizationAPI.Core.Entities.AuthorizationDTO;
+using InnoClinic.AuthorizationAPI.Core.Entities.Models;
+using InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
 
 namespace InnoClinic.AuthorizationAPI.Application.MappingProfiles
 {

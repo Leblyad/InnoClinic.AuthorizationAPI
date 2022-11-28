@@ -1,5 +1,4 @@
-﻿using InnoClinic.AuthorizationAPI.Core.Entities.Enums;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

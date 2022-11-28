@@ -7,6 +7,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.ConfigureDbConnection(builder.Configuration);
 builder.Services.ConfigureAuthentication(builder.Configuration);
 builder.Services.AddAuthorization();
+builder.Services.AddDbContext();
 builder.Services.ConfigureServices();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
