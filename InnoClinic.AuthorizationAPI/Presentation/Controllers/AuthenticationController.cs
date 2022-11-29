@@ -1,6 +1,7 @@
 ﻿using InnoClinic.AuthorizationAPI.Application.Services.Abstractions;
 using InnoClinic.AuthorizationAPI.Application.Services.AuthorizationDTO;
 using InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
@@ -25,21 +26,37 @@ namespace InnoClinic.AuthorizationAPI.Presentation.Controllers
         /// <response code="500">Operation wasn't succeeded.</response>
         [HttpPost]
         [Route("transaction")]
-        public async Task<IActionResult> RegisterUserTransaction([FromBody] UserForCreationDto userForCreation)
+        public async Task<IActionResult> RegisterUserTransaction([FromBody] UserForCreationByAdminDto userForCreation)
         {
             var user = await _authenticationService.CreateUserTransactionAsync(userForCreation);
             return Created(nameof(RegisterUser), user);
         }
 
         /// <summary>
-        /// Creates a new user
+        /// Creates a new user by receptionist
         /// </summary>
         /// <param name="userForCreation"></param>
         /// <response code="200">Returns user info (username, email, role).</response>
         /// <response code="404">Role not found.</response>
         /// <response code="500">Operation wasn't succeeded.</response>
         [HttpPost]
-        public async Task<IActionResult> RegisterUser([FromBody] UserForCreationDto userForCreation)
+        [Authorize(Roles = "Receptionist")]
+        [Route("receptionist")]
+        public async Task<IActionResult> RegisterUserByReceptionist([FromBody] UserForCreationByAdminDto userForCreation)
+        {
+            var user = await _authenticationService.CreateUserAsync(userForCreation);
+            return Created(nameof(RegisterUser), user);
+        }
+
+        /// <summary>
+        /// Creates a new patien
+        /// </summary>
+        /// <param name="userForCreation"></param>
+        /// <response code="200">Returns user info (username, email, role).</response>
+        /// <response code="404">Role not found.</response>
+        /// <response code="500">Operation wasn't succeeded.</response>
+        [HttpPost]
+        public async Task<IActionResult> RegisterUser([FromBody] UserForCreationByPatientDto userForCreation)
         {
             var user = await _authenticationService.CreateUserAsync(userForCreation);
             return Created(nameof(RegisterUser), user);
