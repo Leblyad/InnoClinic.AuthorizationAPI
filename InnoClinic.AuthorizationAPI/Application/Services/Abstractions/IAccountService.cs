@@ -10,6 +10,6 @@ namespace InnoClinic.AuthorizationAPI.Application.Services.Abstractions
         public Task<CreatedUserDto> CreateUserAsync(UserForCreationDto userForCreation);
         public Task ChangeUserRoleAsync(UserForChangingRole userForChangingRole);
         public Task SignOutUserAsync();
-        public Task<CreatedUserDto> CreateUserTransactionAsync(UserForCreationDto userForCreation);
+        public Task<CreatedUserDto> CreateUserTransactionAsync(UserForCreationByAdminDto userForCreation);
     }
 }

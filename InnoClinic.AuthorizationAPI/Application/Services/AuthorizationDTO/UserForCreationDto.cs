@@ -2,7 +2,7 @@
 
 namespace InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO
 {
-    public class UserForCreationDto
+    public abstract class UserForCreationDto
     {
         public string FirstName { get; set; }
 
@@ -17,6 +17,5 @@ namespace InnoClinic.AuthorizationAPI.Core.Entities.Models.AuthorizationDTO
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
-        public string Role { get; set; }
     }
 }

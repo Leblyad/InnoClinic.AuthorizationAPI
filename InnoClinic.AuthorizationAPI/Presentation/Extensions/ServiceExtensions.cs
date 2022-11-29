@@ -91,10 +91,5 @@ namespace InnoClinic.AuthorizationAPI
                     options.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b =>
                         b.MigrationsAssembly("InnoClinic.AuthorizationAPI")));
         }
-
-        public static void AddDbContext(this IServiceCollection services)
-        {
-            services.AddScoped<AuthenticationDbContext>();
-        }
     }
 }
